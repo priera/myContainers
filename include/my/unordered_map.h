@@ -11,8 +11,6 @@ namespace my {
 template <class Key, class Value>
 class unordered_map final {
 public:
-    static void callMe() { }
-
     using size_type = std::size_t;
     using value_type = std::pair<const Key, Value>;
 

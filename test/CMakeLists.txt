@@ -1,7 +1,8 @@
 add_executable(UnorderedMapTest UnorderedMapTest.cpp)
 
 include_directories("../include")
-target_link_libraries(UnorderedMapTest PRIVATE my)
+target_link_libraries(UnorderedMapTest
+        PRIVATE my GTest::gtest_main)
 
-add_test(NAME UnorderedMapTest
-        COMMAND UnorderedMapTest)
+include(GoogleTest)
+gtest_discover_tests(UnorderedMapTest)

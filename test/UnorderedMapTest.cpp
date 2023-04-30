@@ -1,9 +1,10 @@
-#include <iostream>
+#include <gtest/gtest.h>
 
 #include "my/unordered_map.h"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    my::unordered_map<int, int>::callMe();
-    return 0;
+TEST(UnorderedMapTest, NewMapIsEmpty) {
+    my::unordered_map<int, int> emptyMap {};
+
+    EXPECT_TRUE(emptyMap.empty());
+    EXPECT_EQ(emptyMap.size(), 0);
 }
