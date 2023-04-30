@@ -41,9 +41,18 @@ TEST(UnorderedMapTest, CannotInsertSameElementTwice) {
 }
 
 TEST(UnorderedMapTest, FindOnEmptyMapReturnsEnd) {
-    SimpleMap emptyMap {};
+    SimpleMap map{};
+
+    auto it = map.find(1);
+    EXPECT_TRUE(map.empty());
+    // it == endit; This still does not work
+    EXPECT_TRUE(it.equalTo(map.end()));
+}
+
+/*TEST(UnorderedMapTest, FindReturnsExpectedData) {
+    SimpleMap map {};
 
     auto it = emptyMap.find(1);
     EXPECT_TRUE(emptyMap.empty());
     EXPECT_EQ(emptyMap.size(), 0);
-}
+} */

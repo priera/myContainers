@@ -47,12 +47,13 @@ public:
         pointer operator->() override;
         MyForwardIterator& operator++() override;
 
+        bool equalTo(const MyForwardIterator& other) const noexcept;
+
     private:
         explicit MyForwardIterator(pointer p);
 
         pointer m_p;
 
-        friend bool operator==(const MyForwardIterator& left, const MyForwardIterator& right);
         friend class unordered_map<Key, Value>;
     };
 

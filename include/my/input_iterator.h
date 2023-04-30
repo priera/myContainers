@@ -24,11 +24,11 @@ struct InputIterator : public my::Copiable<InputIterator<Of>>,
 template<typename Of>
 InputIterator<Of>::InputIterator() {}
 
-template<typename Of>
-bool operator!=(const InputIterator<Of>& left, const InputIterator<Of>& right) {
-    return !(left == right);
-}
+} // namespace my
 
+template<typename Of>
+bool operator!=(const my::InputIterator<Of>& left, const my::InputIterator<Of>& right) {
+    return !(left == right);
 }
 
 #endif  // MYCONTAINERS_INPUT_ITERATOR_H

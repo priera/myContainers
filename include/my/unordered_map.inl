@@ -117,8 +117,13 @@ unordered_map<Key, Value>::MyForwardIterator& unordered_map<Key, Value>::MyForwa
 }
 
 template <class Key, class Value>
-bool operator==(const typename unordered_map<Key, Value>::MyForwardIterator& left, const typename unordered_map<Key, Value>::MyForwardIterator& right) noexcept {
-    return left.m_p == right.m_p;
+bool my::unordered_map<Key, Value>::MyForwardIterator::equalTo(const my::unordered_map<Key, Value>::MyForwardIterator& other) const noexcept {
+    return m_p == other.m_p;
 }
 
 }  // namespace my
+
+template <class Key, class Value>
+bool operator==(const typename my::unordered_map<Key, Value>::iterator& left, const typename my::unordered_map<Key, Value>::iterator& right) noexcept {
+    return left.equalTo(right);
+}
