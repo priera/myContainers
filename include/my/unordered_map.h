@@ -32,6 +32,7 @@ public:
     bool insert(value_type&& value);
 
     size_type count(const Key& key) const;
+    iterator find(const Key& key);
 
     struct MyForwardIterator : public my::InputIterator<value_type> {
         using MyBase = InputIterator<value_type>;

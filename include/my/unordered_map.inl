@@ -51,6 +51,11 @@ unordered_map<Key, Value>::size_type unordered_map<Key, Value>::count(const Key&
     return 0;
 }
 
+template<class Key, class Value>
+unordered_map<Key, Value>::iterator unordered_map<Key, Value>::find(const Key& key) {
+
+}
+
 template <class Key, class Value>
 unordered_map<Key, Value>::size_type unordered_map<Key, Value>::computeHash(const key_type& key) const {
     // Instead of using std::hash, I'm implementing a type-agnostic hash generator
