@@ -21,3 +21,21 @@ TEST(UnorderedMapTest, InsertSingleElementSuccessful) {
     EXPECT_TRUE(insertionResult);
     EXPECT_EQ(emptyMap.size(), 1);
 }
+
+TEST(UnorderedMapTest, CannotInsertSameElementTwice) {
+    SimpleMap simpleMap{};
+
+    auto kvPair = SimpleMap::value_type {1, 2};
+    bool insertionResult = simpleMap.insert(kvPair);
+
+    EXPECT_FALSE(simpleMap.empty());
+    EXPECT_TRUE(insertionResult);
+    EXPECT_EQ(simpleMap.size(), 1);
+
+    auto kvPair2 = SimpleMap::value_type {1, 45};
+    insertionResult = simpleMap.insert(kvPair2);
+
+    EXPECT_FALSE(simpleMap.empty());
+    EXPECT_FALSE(insertionResult);
+    EXPECT_EQ(simpleMap.size(), 1);
+}

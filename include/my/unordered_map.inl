@@ -27,15 +27,15 @@ template <class Key, class Value>
 bool unordered_map<Key, Value>::insert(const value_type& value) {
     const size_type index = computeHash(value.first) % TABLE_SIZE;
     TableEntry& entryList = m_hashTable[index];
-    auto it = std::ranges::find_if(entryList, [&](const TableListEntry& entry) {
+    const auto it = std::ranges::find_if(entryList, [&](const TableListEntry& entry) {
         return entry.key == value.first;
     });
 
-    if (it == entryList.end()) {
-        it = entryList.before_begin();
+    if (it != entryList.end()) {
+        return false;
     }
 
-    const auto insertedIt = entryList.insert_after(it, {value.first, value.second});
+    const auto insertedIt = entryList.insert_after(entryList.before_begin(), {value.first, value.second});
     m_size++;
     return true;
 }
@@ -56,7 +56,7 @@ unordered_map<Key, Value>::size_type unordered_map<Key, Value>::computeHash(cons
     // Instead of using std::hash, I'm implementing a type-agnostic hash generator
     // May lead to a lot of conflicts, but that's not the point
 
-    const size_type iterations = sizeof(key_type) / sizeof(char);
+    const size_type iterations = sizeof(key_type) / sizeof(unsigned char);
     const auto bytesView = reinterpret_cast<const unsigned char*>(&key);
     size_type computedHash = 0;
 
