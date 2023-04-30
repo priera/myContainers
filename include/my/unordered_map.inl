@@ -68,4 +68,25 @@ unordered_map<Key, Value>::size_type unordered_map<Key, Value>::computeHash(cons
     return computedHash;
 }
 
+template <class Key, class Value>
+unordered_map<Key, Value>::MyForwardIterator::reference
+unordered_map<Key, Value>::MyForwardIterator::operator*() {
+
+}
+
+template <class Key, class Value>
+unordered_map<Key, Value>::MyForwardIterator::pointer
+unordered_map<Key, Value>::MyForwardIterator::operator->() {
+
+}
+
+template <class Key, class Value>
+unordered_map<Key, Value>::MyForwardIterator& unordered_map<Key, Value>::MyForwardIterator::operator++() {
+
+}
+
+template <class Key, class Value>
+bool
+unordered_map<Key, Value>::MyForwardIterator::operator==(const unordered_map<Key, Value>::MyForwardIterator& other) const noexcept {}
+
 }  // namespace my

@@ -2,18 +2,23 @@
 #define MYCONTAINERS_UNORDERED_MAP_H
 
 #include <cstddef>
+#include <forward_list>
 #include <utility>
 #include <vector>
-#include <forward_list>
+
+#include "my/input_iterator.h"
 
 namespace my {
 
 template <class Key, class Value>
 class unordered_map final {
 public:
+    struct MyForwardIterator;
+
     using key_type = Key;
     using size_type = std::size_t;
     using value_type = std::pair<const key_type, Value>;
+    using iterator = MyForwardIterator;
 
     unordered_map();
     ~unordered_map() = default;
@@ -27,6 +32,17 @@ public:
     bool insert(value_type&& value);
 
     size_type count(const Key& key) const;
+
+    struct MyForwardIterator : public my::InputIterator<value_type> {
+        using MyBase = InputIterator<value_type>;
+        using reference = MyBase::reference;
+        using pointer = MyBase::pointer;
+
+        reference operator*() override;
+        pointer operator->() override;
+        MyForwardIterator& operator++() override;
+        bool operator==(const MyForwardIterator& other) const noexcept override;
+    };
 
 private:
     // Not going to dynamically grow for a toy-example
