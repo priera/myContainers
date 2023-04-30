@@ -16,16 +16,13 @@ struct InputIterator : public my::Copiable<InputIterator<Of>>,
     using reference = value_type&;
     using pointer = value_type*;
 
-    explicit InputIterator() = default;
+    explicit InputIterator();
 
     virtual InputIterator<Of>& operator++() = 0;
-    virtual bool operator==(const InputIterator<Of>& other) const noexcept = 0;
 };
 
 template<typename Of>
-bool operator==(const InputIterator<Of>& left, const InputIterator<Of>& right) {
-    return left.operator==(right);
-}
+InputIterator<Of>::InputIterator() {}
 
 template<typename Of>
 bool operator!=(const InputIterator<Of>& left, const InputIterator<Of>& right) {

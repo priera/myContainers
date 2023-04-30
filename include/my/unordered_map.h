@@ -33,28 +33,34 @@ public:
 
     size_type count(const Key& key) const;
     iterator find(const Key& key);
+    iterator end() const;
+
 
     struct MyForwardIterator : public my::InputIterator<value_type> {
         using MyBase = InputIterator<value_type>;
         using reference = MyBase::reference;
         using pointer = MyBase::pointer;
 
+        explicit MyForwardIterator();
+
         reference operator*() override;
         pointer operator->() override;
         MyForwardIterator& operator++() override;
-        bool operator==(const MyForwardIterator& other) const noexcept override;
+
+    private:
+        explicit MyForwardIterator(pointer p);
+
+        pointer m_p;
+
+        friend bool operator==(const MyForwardIterator& left, const MyForwardIterator& right);
+        friend class unordered_map<Key, Value>;
     };
 
 private:
     // Not going to dynamically grow for a toy-example
     static constexpr size_type TABLE_SIZE = 100000;
 
-    struct TableListEntry{
-        Key key;
-        Value value;
-    };
-
-    using TableEntry = std::forward_list<TableListEntry>;
+    using TableEntry = std::forward_list<value_type>;
 
     size_type computeHash(const key_type& key) const;
 

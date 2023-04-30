@@ -14,6 +14,10 @@ struct Copiable {
     Copiable(Copiable<T>&& other) noexcept = default;
     Copiable& operator=(Copiable<T>&& other) noexcept = default;
 
+protected:
+
+    // Derived classes will require this, despite is not part of the concept
+    Copiable() = default;
 };
 
 }

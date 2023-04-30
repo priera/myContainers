@@ -39,3 +39,11 @@ TEST(UnorderedMapTest, CannotInsertSameElementTwice) {
     EXPECT_FALSE(insertionResult);
     EXPECT_EQ(simpleMap.size(), 1);
 }
+
+TEST(UnorderedMapTest, FindOnEmptyMapReturnsEnd) {
+    SimpleMap emptyMap {};
+
+    auto it = emptyMap.find(1);
+    EXPECT_TRUE(emptyMap.empty());
+    EXPECT_EQ(emptyMap.size(), 0);
+}

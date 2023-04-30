@@ -27,8 +27,8 @@ template <class Key, class Value>
 bool unordered_map<Key, Value>::insert(const value_type& value) {
     const size_type index = computeHash(value.first) % TABLE_SIZE;
     TableEntry& entryList = m_hashTable[index];
-    const auto it = std::ranges::find_if(entryList, [&](const TableListEntry& entry) {
-        return entry.key == value.first;
+    const auto it = std::ranges::find_if(entryList, [&](const value_type& entryValue) {
+        return entryValue.first == value.first;
     });
 
     if (it != entryList.end()) {
@@ -53,7 +53,23 @@ unordered_map<Key, Value>::size_type unordered_map<Key, Value>::count(const Key&
 
 template<class Key, class Value>
 unordered_map<Key, Value>::iterator unordered_map<Key, Value>::find(const Key& key) {
+    const size_type index = computeHash(key) % TABLE_SIZE;
+    TableEntry& entryList = m_hashTable[index];
+    const auto it = std::ranges::find_if(entryList, [&](const value_type& entryValue) {
+        return entryValue.first == key;
+    });
 
+    if (it == entryList.end()) {
+        return end();
+    }
+
+    typename MyForwardIterator::value_type foundValue = *it;
+    return MyForwardIterator(&foundValue);
+}
+
+template<class Key, class Value>
+unordered_map<Key, Value>::iterator unordered_map<Key, Value>::end() const {
+    return MyForwardIterator();
 }
 
 template <class Key, class Value>
@@ -74,15 +90,25 @@ unordered_map<Key, Value>::size_type unordered_map<Key, Value>::computeHash(cons
 }
 
 template <class Key, class Value>
+unordered_map<Key, Value>::MyForwardIterator::MyForwardIterator() :
+    MyBase(),
+    m_p(nullptr) {}
+
+template <class Key, class Value>
+unordered_map<Key, Value>::MyForwardIterator::MyForwardIterator(pointer p) :
+    MyBase(),
+    m_p(p) {}
+
+template <class Key, class Value>
 unordered_map<Key, Value>::MyForwardIterator::reference
 unordered_map<Key, Value>::MyForwardIterator::operator*() {
-
+    return *m_p;
 }
 
 template <class Key, class Value>
 unordered_map<Key, Value>::MyForwardIterator::pointer
 unordered_map<Key, Value>::MyForwardIterator::operator->() {
-
+    return m_p;
 }
 
 template <class Key, class Value>
@@ -91,7 +117,8 @@ unordered_map<Key, Value>::MyForwardIterator& unordered_map<Key, Value>::MyForwa
 }
 
 template <class Key, class Value>
-bool
-unordered_map<Key, Value>::MyForwardIterator::operator==(const unordered_map<Key, Value>::MyForwardIterator& other) const noexcept {}
+bool operator==(const typename unordered_map<Key, Value>::MyForwardIterator& left, const typename unordered_map<Key, Value>::MyForwardIterator& right) noexcept {
+    return left.m_p == right.m_p;
+}
 
 }  // namespace my
