@@ -63,8 +63,7 @@ unordered_map<Key, Value>::iterator unordered_map<Key, Value>::find(const Key& k
         return end();
     }
 
-    typename MyForwardIterator::value_type foundValue = *it;
-    return MyForwardIterator(&foundValue);
+    return MyForwardIterator(&(*it));
 }
 
 template<class Key, class Value>

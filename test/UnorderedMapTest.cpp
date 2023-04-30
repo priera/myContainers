@@ -45,14 +45,20 @@ TEST(UnorderedMapTest, FindOnEmptyMapReturnsEnd) {
 
     auto it = map.find(1);
     EXPECT_TRUE(map.empty());
-    // it == endit; This still does not work
+    // it == map.end(); This still does not work
     EXPECT_TRUE(it.equalTo(map.end()));
 }
 
-/*TEST(UnorderedMapTest, FindReturnsExpectedData) {
+TEST(UnorderedMapTest, FindReturnsExpectedData) {
     SimpleMap map {};
 
-    auto it = emptyMap.find(1);
-    EXPECT_TRUE(emptyMap.empty());
-    EXPECT_EQ(emptyMap.size(), 0);
-} */
+    auto kvPair = SimpleMap::value_type {1, 2};
+    bool insertionResult = map.insert(kvPair);
+    EXPECT_TRUE(insertionResult);
+
+    auto it = map.find(1);
+    ASSERT_FALSE(map.empty());
+
+    ASSERT_EQ(it->first, 1);
+    ASSERT_EQ(it->second, 2);
+}
