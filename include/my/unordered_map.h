@@ -47,7 +47,7 @@ public:
         pointer operator->() override;
         MyForwardIterator& operator++() override;
 
-        bool equalTo(const MyForwardIterator& other) const noexcept;
+        bool operator==(const MyForwardIterator& other) const noexcept;
 
     private:
         explicit MyForwardIterator(pointer p);
@@ -63,6 +63,7 @@ private:
 
     using TableEntry = std::forward_list<value_type>;
 
+    TableEntry& getTableEntry(const key_type& key);
     size_type computeHash(const key_type& key) const;
 
     std::vector<TableEntry> m_hashTable;
